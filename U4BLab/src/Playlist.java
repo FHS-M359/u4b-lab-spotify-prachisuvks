@@ -1,8 +1,12 @@
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Playlist {
+
      private ArrayList<Song>songs = new ArrayList<>();
-     public void readSong( String name){
-         String []arr = name.split(",");
+     public void readSong(String line){
+             String []arr = line.split(",");
              String title = arr[0];
              String artist = arr[1];
              String album = arr[2];
@@ -11,7 +15,7 @@ public class Playlist {
              String genre = arr[5];
              Song song = new Song(title, artist, album, duration, release, genre);
              songs.add(song);
-             //System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", title, artist,album,release, genre));
+
      }
      public void searchSong(String genre){
          boolean found = false;
@@ -27,12 +31,11 @@ public class Playlist {
          }
 
      }
-     public String toString(){
-         String result = "";
+     public void display(){
          for(Song val: songs){
-            result += val;
+            System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(),val.getYear(), val.getGenre()));
          }
-         return result;
+
      }
      // use static because this doesn't belong to a specific object
     public void sortArtistA() {
@@ -48,11 +51,11 @@ public class Playlist {
             songs.set(min_index, temp);
         }
     }
-         public void sortArtistZ(){
-             for(int i = 0; i < songs.size()-1; i++){
+         public void sortArtistZ() {
+             for (int i = 0; i < songs.size() - 1; i++) {
                  int max_index = i;
-                 for(int j = i + 1; j < songs.size(); j++){
-                     if(songs.get(j).getArtist().compareToIgnoreCase(songs.get(max_index).getArtist()) > 0){
+                 for (int j = i + 1; j < songs.size(); j++) {
+                     if (songs.get(j).getArtist().compareToIgnoreCase(songs.get(max_index).getArtist()) > 0) {
                          max_index = j;
                      }
                  }
@@ -60,13 +63,15 @@ public class Playlist {
                  songs.set(i, songs.get(max_index));
                  songs.set(max_index, temp);
              }
-        }
-        public void artists(){
-         for(Song s: songs){
-             System.out.println(s.getArtist());
          }
+             public void artists(){
+                 for(Song val: songs){
+                  System.out.println(val.getArtist());
+                 }
+             }
+
         }
-    }
+
 
 
 
