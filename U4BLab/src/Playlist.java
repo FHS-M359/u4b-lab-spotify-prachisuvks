@@ -4,40 +4,44 @@ import java.util.Scanner;
 
 public class Playlist {
 
-     private ArrayList<Song>songs = new ArrayList<>();
-     public void readSong(String line){
-             String []arr = line.split(",");
-             String title = arr[0];
-             String artist = arr[1];
-             String album = arr[2];
-             int duration = Integer.parseInt(arr[3]);
-             int release = Integer.parseInt(arr[4]);
-             String genre = arr[5];
-             Song song = new Song(title, artist, album, duration, release, genre);
-             songs.add(song);
+    private ArrayList<Song> songs = new ArrayList<>();
 
-     }
-     public void searchSong(String genre){
-         boolean found = false;
-        for(Song val: songs){
+    public void readSong(String line) {
+        String[] arr = line.split(",");
+        String title = arr[0];
+        String artist = arr[1];
+        String album = arr[2];
+        int duration = Integer.parseInt(arr[3]);
+        int release = Integer.parseInt(arr[4]);
+        String genre = arr[5];
+        Song song = new Song(title, artist, album, duration, release, genre);
+        songs.add(song);
+
+    }
+
+    public void searchSong(String genre) {
+        boolean found = false;
+        for (Song val : songs) {
             if (val.getGenre().equalsIgnoreCase(genre)) {
                 System.out.println(val.getTitle());
                 found = true;
             }
         }
-        if(!found) {
+        if (!found) {
             System.out.println("Genre not found");
 
-         }
+        }
 
-     }
-     public void display(){
-         for(Song val: songs){
-            System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(),val.getYear(), val.getGenre()));
-         }
+    }
 
-     }
-     // use static because this doesn't belong to a specific object
+    public void display() {
+        for (Song val : songs) {
+            System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(), val.getYear(), val.getGenre()));
+        }
+
+    }
+
+    // use static because this doesn't belong to a specific object
     public void sortArtistA() {
         for (int i = 0; i < songs.size() - 1; i++) {
             int min_index = i;
@@ -51,26 +55,58 @@ public class Playlist {
             songs.set(min_index, temp);
         }
     }
-         public void sortArtistZ() {
-             for (int i = 0; i < songs.size() - 1; i++) {
-                 int max_index = i;
-                 for (int j = i + 1; j < songs.size(); j++) {
-                     if (songs.get(j).getArtist().compareToIgnoreCase(songs.get(max_index).getArtist()) > 0) {
-                         max_index = j;
-                     }
-                 }
-                 Song temp = songs.get(i);
-                 songs.set(i, songs.get(max_index));
-                 songs.set(max_index, temp);
-             }
-         }
-             public void artists(){
-                 for(Song val: songs){
-                  System.out.println(val.getArtist());
-                 }
-             }
 
+    public void sortArtistZ() {
+        for (int i = 0; i < songs.size() - 1; i++) {
+            int max_index = i;
+            for (int j = i + 1; j < songs.size(); j++) {
+                if (songs.get(j).getArtist().compareToIgnoreCase(songs.get(max_index).getArtist()) > 0) {
+                    max_index = j;
+                }
+            }
+            Song temp = songs.get(i);
+            songs.set(i, songs.get(max_index));
+            songs.set(max_index, temp);
         }
+    }
+
+    public void artists() {
+        for (Song val : songs) {
+            System.out.println(val.getArtist());
+        }
+    }
+    public void years() {
+        for (Song val : songs) {
+            System.out.println(val.getYear());
+        }
+    }
+
+    public void insertYearsOldFirst() {
+        for (int i = 1; i < songs.size(); i++) {
+            int tempValue = songs.get(i).getYear();
+            int position = i;
+            while (position > 0 && songs.get(position - 1).getYear() > tempValue) {
+                songs.set(position, songs.get(position - 1));
+                position--;
+            }
+        }
+    }
+    public void insertYearsNewFirst(){
+        for(int i = 1; i < songs.size(); i++){
+            int tempValue = songs.get(i).getYear();
+            int position = i;
+            while(position > 0 && songs.get(position - 1).getYear() < tempValue){
+                songs.get(position).setYear(songs.get(position -1).getYear());
+                position--;
+            }
+            songs.get(position).setYear(tempValue);
+        }
+    }
+}
+
+
+
+
 
 
 
