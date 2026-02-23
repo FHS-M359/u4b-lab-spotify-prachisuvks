@@ -1,4 +1,4 @@
-import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -46,13 +46,15 @@ public class SpotifyTester {
             }
             else if (option == 2) {
                 playlist.sortArtistZ();
-                System.out.println();
+                playlist.artists();
             }
             else if (option == 3) {
-                //coming soon
+                playlist.insertYearsOldFirst();
+                playlist.years();
             }
             else if (option == 4) {
-                //coming soon
+                playlist.insertYearsNewFirst();
+                playlist.years();
             }
             else if (option == 5) {
                 System.out.println("Enter a genre to search for:");
