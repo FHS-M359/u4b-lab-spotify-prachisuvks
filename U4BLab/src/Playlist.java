@@ -1,114 +1,75 @@
-import java.io.File;
-import java.util.ArrayList;
+
+import java.io.*;
 import java.util.Scanner;
 
-public class Playlist {
+public class SpotifyTester {
+    public static void main(String[] args) throws FileNotFoundException {
 
-    private ArrayList<Song> songs = new ArrayList<>();
+        Playlist playlist = new Playlist();
+        Scanner inF = new Scanner(new File("spotify_unique_years_artists.txt"));
+        while(inF.hasNextLine()){
+            String line = inF.nextLine();
+            playlist.readSong(line);
+        }
 
-    public void readSong(String line) {
-        String[] arr = line.split(",");
-        String title = arr[0];
-        String artist = arr[1];
-        String album = arr[2];
-        int duration = Integer.parseInt(arr[3]);
-        int release = Integer.parseInt(arr[4]);
-        String genre = arr[5];
-        Song song = new Song(title, artist, album, duration, release, genre);
-        songs.add(song);
+        inF.close();
+        Scanner scan = new Scanner(System.in);
 
-    }
 
-    public void searchSong(String genre) {
-        boolean found = false;
-        for (Song val : songs) {
-            if (val.getGenre().equalsIgnoreCase(genre)) {
-                System.out.println(val.getTitle());
-                found = true;
+
+        int option = 0;
+        while (option != 7) {
+            boolean good = true;
+            System.out.println("====== Spotify Menu ======");
+            System.out.println("1. Sort By Artist (A-Z)");
+            System.out.println("2. Sort By Artist (Z-A)");
+            System.out.println("3. Sort By Year (oldest - newest)");
+            System.out.println("4. Sort By Year (newest - oldest)");
+            System.out.println("5. Search by genre");
+            System.out.println("6. Display all songs");
+            System.out.println("7. Quit");
+            System.out.println("Enter choice (1-7): ");
+            try {
+                option = scan.nextInt();
+                scan.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input numbers only");
+                scan.nextLine();
+                good = false;
             }
-        }
-        if (!found) {
-            System.out.println("Genre not found");
-
-        }
-
-    }
-
-    public void display() {
-        for (Song val : songs) {
-            System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(), val.getYear(), val.getGenre()));
-        }
-
-    }
-
-    // use static because this doesn't belong to a specific object
-    public void sortArtistA() {
-        for (int i = 0; i < songs.size() - 1; i++) {
-            int min_index = i;
-            for (int j = i + 1; j < songs.size(); j++) {
-                if (songs.get(j).getArtist().compareToIgnoreCase(songs.get(min_index).getArtist()) < 0) {
-                    min_index = j;
-                }
+            if (option < 1 || option > 7) {
+                System.out.println("Enter numbers in between 1 - 7");
             }
-            Song temp = songs.get(i);
-            songs.set(i, songs.get(min_index));
-            songs.set(min_index, temp);
-        }
-    }
-
-    public void sortArtistZ() {
-        for (int i = 0; i < songs.size() - 1; i++) {
-            int max_index = i;
-            for (int j = i + 1; j < songs.size(); j++) {
-                if (songs.get(j).getArtist().compareToIgnoreCase(songs.get(max_index).getArtist()) > 0) {
-                    max_index = j;
-                }
+            if (option == 1) {
+               playlist.sortArtistA();
+               playlist.display();
             }
-            Song temp = songs.get(i);
-            songs.set(i, songs.get(max_index));
-            songs.set(max_index, temp);
-        }
-    }
-
-    public void artists() {
-        for (Song val : songs) {
-            System.out.println(val.getArtist());
-        }
-    }
-    public void years() {
-        for (Song val : songs) {
-            System.out.println(val.getYear());
-        }
-    }
-
-    public void insertYearsOldFirst() {
-        for (int i = 1; i < songs.size(); i++) {
-            int tempValue = songs.get(i).getYear();
-            int position = i;
-            while (position > 0 && songs.get(position - 1).getYear() > tempValue) {
-                songs.set(position, songs.get(position - 1));
-                position--;
+            else if (option == 2) {
+                playlist.sortArtistZ();
+                playlist.display();
             }
-        }
-    }
-    public void insertYearsNewFirst(){
-        for(int i = 1; i < songs.size(); i++){
-            int tempValue = songs.get(i).getYear();
-            int position = i;
-            while(position > 0 && songs.get(position - 1).getYear() < tempValue){
-                songs.get(position).setYear(songs.get(position -1).getYear());
-                position--;
+            else if (option == 3) {
+                playlist.insertYearsOldFirst();
+                playlist.display();
             }
-            songs.get(position).setYear(tempValue);
+            else if (option == 4) {
+                playlist.insertYearsNewFirst();
+               playlist.display();
+            }
+            else if (option == 5) {
+                System.out.println("Enter a genre to search for:");
+                String genre = scan.nextLine();
+                System.out.print("Result: ");
+                playlist.searchSong(genre);
+            }
+            else if (option == 6) {
+                System.out.println("Title\t\t\t\t\t\t\tArtist\t\t\t\tAlbum\t\t\t\t\t\t\tYear\t\t\tGenre");
+                playlist.display();
+            }
+            else if (option == 7) {
+                System.out.println("Goodbye");
+                scan.close();
+            }
         }
     }
 }
-
-
-
-
-
-
-
-
-
