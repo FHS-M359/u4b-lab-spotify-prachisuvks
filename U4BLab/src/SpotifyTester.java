@@ -42,19 +42,19 @@ public class SpotifyTester {
             }
             if (option == 1) {
                playlist.sortArtistA();
-               playlist.artists();
+               playlist.display();
             }
             else if (option == 2) {
                 playlist.sortArtistZ();
-                playlist.artists();
+                playlist.display();
             }
             else if (option == 3) {
                 playlist.insertYearsOldFirst();
-                playlist.years();
+                playlist.display();
             }
             else if (option == 4) {
                 playlist.insertYearsNewFirst();
-                playlist.years();
+               playlist.display();
             }
             else if (option == 5) {
                 System.out.println("Enter a genre to search for:");
