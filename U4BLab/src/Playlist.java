@@ -18,7 +18,9 @@ public class Playlist {
         songs.add(song);
 
     }
-
+    //description:filters all songs with and prints songs from that genre
+    //input:users enter the genre they want to use
+    //output: return songs from the genre
     public void searchSong(String genre) {
         boolean found = false;
         for (Song val : songs) {
@@ -29,18 +31,20 @@ public class Playlist {
         }
         if (!found) {
             System.out.println("Genre not found");
-
         }
-
     }
-
+    //description:formats all the variables
+    //input:
+    //output:pritnts the playlist
     public void display() {
         for (Song val : songs) {
             System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(), val.getYear(), val.getGenre()));
         }
 
     }
-
+    //description: sorts all the artist from oldest to newest
+    //input:
+    //output:
     // use static because this doesn't belong to a specific object
     public void sortArtistA() {
         for (int i = 0; i < songs.size() - 1; i++) {
@@ -55,7 +59,9 @@ public class Playlist {
             songs.set(min_index, temp);
         }
     }
-
+    //description: sorts all the artist from newest to oldest
+    //input:
+    //output:
     public void sortArtistZ() {
         for (int i = 0; i < songs.size() - 1; i++) {
             int max_index = i;
@@ -70,7 +76,9 @@ public class Playlist {
         }
     }
 
-
+    //description: sorts all the songs based on the release dates(OLDEST TO NEWEST)
+    //input:
+    //output:
     public void insertYearsOldFirst() {
         for (int i = 1; i < songs.size(); i++) {
             int tempValue = songs.get(i).getYear();
@@ -82,7 +90,9 @@ public class Playlist {
         }
     }
 
-
+    //description: sorts all the songs based on the release date(NEWEST TO OLDEST)
+    //input:
+    //output:
     public void insertYearsNewFirst(){
         for(int i = 1; i < songs.size(); i++){
             int tempValue = songs.get(i).getYear();
