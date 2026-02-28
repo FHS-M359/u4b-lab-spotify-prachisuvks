@@ -1,11 +1,12 @@
-import java.io.File;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Playlist {
 
     private ArrayList<Song> songs = new ArrayList<>();
-
+    //description:reads from the file, splits it by commas
+    //input: creates a song object and adds it to the playlist
+    //output:
     public void readSong(String line) {
         String[] arr = line.split(",");
         String title = arr[0];
@@ -35,7 +36,7 @@ public class Playlist {
     }
     //description:formats all the variables
     //input:
-    //output:pritnts the playlist
+    //output:prints the playlist
     public void display() {
         for (Song val : songs) {
             System.out.println(String.format("%-30s %-20s %-30s %-15d %-10s", val.getTitle(), val.getArtist(), val.getAlbum(), val.getYear(), val.getGenre()));
@@ -84,13 +85,14 @@ public class Playlist {
             int tempValue = songs.get(i).getYear();
             int position = i;
             while (position > 0 && songs.get(position - 1).getYear() > tempValue) {
-                songs.set(position, songs.get(position - 1));
+                songs.get(position).setYear(songs.get(position - 1).getYear());
                 position--;
             }
+            songs.get(position).setYear(tempValue);
         }
     }
 
-    //description: sorts all the songs based on the release date(NEWEST TO OLDEST)
+    //description:sorts all the songs based on the release date(NEWEST TO OLDEST)
     //input:
     //output:
     public void insertYearsNewFirst(){
