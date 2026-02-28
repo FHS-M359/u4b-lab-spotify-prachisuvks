@@ -3,26 +3,24 @@ import java.io.*;
 import java.util.Scanner;
 
 public class SpotifyTester {
+    //description: main method that uses songs from a file, displays a menu
+    //input:users pick a number from 1 - 7
+    //output: displays a menu sorted by the requirements 
     public static void main(String[] args) throws FileNotFoundException {
-
         Playlist playlist = new Playlist();
         Scanner inF = new Scanner(new File("spotify_unique_years_artists.txt"));
         while(inF.hasNextLine()){
             String line = inF.nextLine();
             playlist.readSong(line);
         }
-
         inF.close();
         Scanner scan = new Scanner(System.in);
-
-
-
         int option = 0;
         while (option != 7) {
             boolean good = true;
             System.out.println("====== Spotify Menu ======");
             System.out.println("1. Sort By Artist (A-Z)");
-            System.out.println("2. Sort By Artist (Z-A)");
+             System.out.println("2. Sort By Artist (Z-A)");
             System.out.println("3. Sort By Year (oldest - newest)");
             System.out.println("4. Sort By Year (newest - oldest)");
             System.out.println("5. Search by genre");
